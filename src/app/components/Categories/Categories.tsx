@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import {FormikValues, useFormik} from 'formik';
 import Actions from "@/app/components/Actions";
 import update from 'immutability-helper'
-import {Context} from "@/app/DashboardContext";
+import {Context, ContextValue} from "@/app/DashboardContext";
 import Modal from "@/app/components/Modal";
 import {Category} from "@/app/lib/data";
 
@@ -47,7 +47,7 @@ const fetchEditCategory = async (categories: Category[]): Promise<Category[]> =>
 };
 
 const Categories = () => {
-  const {categories, setCategories} = useContext(Context);
+  const {categories, setCategories} = useContext<ContextValue>(Context);
   const [createCategory, setCreateCategory] = useState(false);
   const [displayModal, setDisplayModal] = useState<number | null>(null);
 
@@ -96,7 +96,7 @@ const Categories = () => {
       resetForm();
       setCreateCategory(false);
     }
-  }, [categories, resetForm, setCreateCategory]);
+  }, [categories, resetForm, setCreateCategory, setCategories]);
 
   const handleSubmit = useCallback(async () => {
     if (categories.some(x => x?.edit)) {
@@ -121,7 +121,7 @@ const Categories = () => {
     }
   }, [isValid, values, categories, handleCancel, setCategories, setErrors]);
 
-  const moveCategory = useCallback((dragIndex, hoverIndex, dragId, hoverId) => {
+  const moveCategory = useCallback((dragIndex: number, hoverIndex: number) => {
     setCategories((prevCategories) =>
       update(prevCategories, {
         $splice: [
@@ -130,7 +130,7 @@ const Categories = () => {
         ],
       }).map((x, i, arr) => ({...x, edit: true, sort: (arr.length - 1) - i, prevSort: x.prevSort ?? x.sort})),
     )
-  }, [categories]);
+  }, [categories, setCategories]);
 
   return (
     <CategoriesContainer>

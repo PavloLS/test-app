@@ -4,7 +4,7 @@ import {Category} from "@/app/lib/data";
 
 export type ContextCategory = Category & {edit?: boolean; prevEnabled?: boolean; prevSort?: number};
 
-interface ContextValue {
+export interface ContextValue {
   categories: ContextCategory[];
   setCategories: (value: ContextCategory[]) => void;
   search: string;
