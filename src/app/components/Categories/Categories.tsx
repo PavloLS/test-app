@@ -86,7 +86,17 @@ const Categories = () => {
 
   useEffect(() => {
     getCategories();
-  },[]);
+  },[getCategories]);
+
+  const handleCancel = useCallback(() => {
+    if (categories.some(x => x?.edit)) {
+      const defaultCategoriesValues = categories.map(({edit, prevSort, prevEnabled, ...keepAttrs}) => ({...keepAttrs, sort: prevSort ?? keepAttrs.sort, enabled: prevEnabled ?? keepAttrs.enabled}))
+      setCategories(defaultCategoriesValues.sort((a, b) => b.sort - a.sort));
+    } else {
+      resetForm();
+      setCreateCategory(false);
+    }
+  }, [categories, resetForm, setCreateCategory]);
 
   const handleSubmit = useCallback(async () => {
     if (categories.some(x => x?.edit)) {
@@ -109,17 +119,7 @@ const Categories = () => {
     } else if (!values.name && !isValid) {
       setErrors({name: ERROR_CATEGORY_MESSAGE})
     }
-  }, [isValid, values, categories])
-
-  const handleCancel = useCallback(() => {
-    if (categories.some(x => x?.edit)) {
-      const defaultCategoriesValues = categories.map(({edit, prevSort, prevEnabled, ...keepAttrs}) => ({...keepAttrs, sort: prevSort ?? keepAttrs.sort, enabled: prevEnabled ?? keepAttrs.enabled}))
-      setCategories(defaultCategoriesValues.sort((a, b) => b.sort - a.sort));
-    } else {
-      resetForm();
-      setCreateCategory(false);
-    }
-  }, [categories]);
+  }, [isValid, values, categories, handleCancel, setCategories, setErrors]);
 
   const moveCategory = useCallback((dragIndex, hoverIndex, dragId, hoverId) => {
     setCategories((prevCategories) =>
