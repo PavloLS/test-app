@@ -22,7 +22,7 @@ const initialValues: FormikValues = {
 };
 
 const fetchDeleteCategory = async (id: number): Promise<Category[]> => {
-  const res = await fetch(`http://localhost:3000/api/category/${id}`, {
+  const res = await fetch(`${process.env.BASE_URL}/category/${id}`, {
     method: 'DELETE',
     headers: {
       'Accept': 'application/json',
@@ -34,7 +34,7 @@ const fetchDeleteCategory = async (id: number): Promise<Category[]> => {
 };
 
 const fetchEditCategory = async (categories: Category[]): Promise<Category[]> => {
-  const res = await fetch(`http://localhost:3000/api/category`, {
+  const res = await fetch(`${process.env.BASE_URL}/category`, {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
@@ -75,7 +75,7 @@ const Categories = () => {
 
   const getCategories = useCallback(async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/category')
+      const res = await fetch(`${process.env.BASE_URL}/category`)
       const data = await res.json();
       setCategories(data.items);
     } catch (err) {
@@ -105,7 +105,7 @@ const Categories = () => {
       return;
     }
     if (isValid && values.name) {
-      const res = await fetch('http://localhost:3000/api/category', {
+      const res = await fetch(`${process.env.BASE_URL}/category`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
