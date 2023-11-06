@@ -2,11 +2,11 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import styled from "styled-components";
 import PlusIcon from "@/app/components/icons/PlusIcon";
 import CategoryItem, {Switch} from "@/app/components/Categories/CategoryItem";
-import * as yup from 'yup';
+import * as yup from "yup";
 import {FormikValues, useFormik} from 'formik';
 import Actions from "@/app/components/Actions";
-import update from 'immutability-helper'
-import {Context, ContextValue} from "@/app/DashboardContext";
+import update from "immutability-helper";
+import {Context, ContextCategory, ContextValue} from "@/app/DashboardContext";
 import Modal from "@/app/components/Modal";
 import {Category} from "@/app/lib/data";
 
@@ -122,15 +122,16 @@ const Categories = () => {
   }, [isValid, values, categories, handleCancel, setCategories, setErrors]);
 
   const moveCategory = useCallback((dragIndex: number, hoverIndex: number) => {
+    // @ts-ignore
     setCategories((prevCategories) =>
       update(prevCategories, {
         $splice: [
           [dragIndex, 1],
           [hoverIndex, 0, prevCategories[dragIndex]],
         ],
-      }).map((x, i, arr) => ({...x, edit: true, sort: (arr.length - 1) - i, prevSort: x.prevSort ?? x.sort})),
+      }).map((x: ContextCategory, i: number, arr: ContextCategory[]) => ({...x, edit: true, sort: (arr.length - 1) - i, prevSort: x.prevSort ?? x.sort})),
     )
-  }, [categories, setCategories]);
+  }, [setCategories]);
 
   return (
     <CategoriesContainer>
@@ -160,7 +161,7 @@ const Categories = () => {
                 <label data-on="On" data-off="Off" className="btn-color-mode-switch-inner" />
               </Switch>
             </Item>
-            {errors.name && <Error>{errors.name}</Error>}
+            {(errors.name && typeof errors.name === 'string') && <Error>{errors.name}</Error>}
           </>
         )}
         {categories.map((category, index) => (

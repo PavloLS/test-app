@@ -45,12 +45,14 @@ const SearchContainer = styled('div')({
     position: 'absolute',
     top: 10,
     right: 20,
+    // @ts-ignore
+    '@media (max-width: 468px)': {
+      'svg': {
+        top: 26,
+      },
+    }
   },
-  '@media (max-width: 468px)': {
-    svg: {
-      top: 26,
-    },
-  }
+  
 });
 
 const Logo = styled.div`

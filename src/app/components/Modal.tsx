@@ -5,11 +5,11 @@ import DeleteIcon from "@/app/components/icons/DeleteIcon";
 interface ModalProps {
   closeModal: () => void;
   displayModal: number | null;
-  onDelete: (id: number) => Promise<void>;
+  onDelete: (id: number | null) => Promise<void>;
 }
 
 const Modal: React.FC<ModalProps> = ({closeModal, displayModal, onDelete}) => {
-  const close = (e) => {
+  const close = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation()
     closeModal()
   };

@@ -15,7 +15,7 @@ interface CategoryItemProps {
 }
 
 const CategoryItem: React.FC<CategoryItemProps> = ({index, category, moveCategory, showDeleteModal}) => {
-  const ref = React.useRef(null);
+  const ref = React.useRef<HTMLDivElement>(null);
   const {categories, setCategories} = useContext(Context);
 
   const handleSwitch = async () => {
@@ -29,7 +29,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({index, category, moveCategor
         handlerId: monitor.getHandlerId(),
       }
     },
-    hover(item, monitor) {
+    hover(item: any, monitor) {
       if (!ref.current) {
         return
       }
@@ -49,7 +49,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({index, category, moveCategor
       // Determine mouse position
       const clientOffset = monitor.getClientOffset()
       // Get pixels to the top
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top
+      const hoverClientY = (clientOffset?.y ?? 0) - hoverBoundingRect.top
       // Only perform the move when the mouse has crossed half of the items height
       // When dragging downwards, only move when the cursor is below 50%
       // When dragging upwards, only move when the cursor is above 50%
@@ -126,6 +126,7 @@ export const Switch = styled('label')({
     transition: 'all 0.3s ease',
     display: 'block',
     cursor: 'pointer',
+    // @ts-ignore
     '&:before': {
       content: 'attr(data-off)',
       position: 'absolute',

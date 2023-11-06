@@ -9,7 +9,7 @@ let categories: Category[] = [
   {id: 1, name: 'Other', enabled: true, sort: 0},
 ];
 
-const sortedCategories = (a, b) => b.sort - a.sort;
+const sortedCategories = (a: Category, b: Category) => b.sort - a.sort;
 
 export const getCategories = () => categories.sort(sortedCategories);
 
