@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: Satoshi;
+}
+
+/* MODAL */
+/* Background effect. It covers the entire site */
+.modal {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Overlay effect: translucent background: black w/ partial opacity */
+  z-index: 1; /* Overlay effect: positioned over other containers */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  position: fixed; /* Fix position on the top-left corner*/
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto; /* Enable scroll if needed */
+  padding-top: calc(50vh - 142px);
+
+}
+/* Modal content */
+.modal-content {
+  width: 400px;
+  margin: auto; /* Auto margin according to the element width */
+  border-radius: 4px;
+  background: #272934;
+  /* Card Shadow */
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.04);
+  padding: 32px 24px;
+}
+/* Close button */
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #aaaaaa;
+  float: right; /* Positioned to the right of the parent container whichever size it is */
+  font-size: 25px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
