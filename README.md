@@ -1,7 +1,5 @@
 # React
-## running the project
-
-run the following commands in the project root directory:
+## run the following commands in the project root directory:
 ```yarn```
 -
 ```yarn dev```
